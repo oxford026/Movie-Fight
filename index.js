@@ -1,9 +1,9 @@
 const fetchData = async searchTerm => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: {
-            apikey: '406cea08', 
+            apikey: '406cea08',
             s: searchTerm
-            
+
         }
     });
 
@@ -11,6 +11,18 @@ const fetchData = async searchTerm => {
 };
 
 const input = document.querySelector('input');
-input.addEventListener('input', event => {
-    fetchData(event.target.value);
-});
+
+let timeoutId;
+const onInput = event => {
+    if(timeoutId){
+        clearTimeout(timeoutId)
+    }
+    setTimeout(() => {
+        fetchData(event.target.value);
+    }, 2000
+   )}
+
+
+    input.addEventListener('input', onInput);
+
+
