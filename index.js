@@ -21,7 +21,7 @@ const onInput = event => {
         fetchData(event.target.value);
     }, 2000
     )
-}
+}   
 
 
 input.addEventListener('input', onInput);
