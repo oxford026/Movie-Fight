@@ -21,17 +21,20 @@ const fetchData = async searchTerm => {
     const movies = await fetchData(event.target.value);
     
     for (let movie of movies) {
-      const div = document.createElement('div');
+      const a = document.createElement('a');
   
-      div.innerHTML = `
+      a.innerHTML = `
         <img src="${movie.Poster}" />
         <h1>${movie.Title}</h1>
         <h3>${movie.Year}</h3>
       `;
 
   
-      document.querySelector('#target').appendChild(div);
+      document.querySelector('.dropdown-content').appendChild(a);
     }
   };
   input.addEventListener('input', debounce(onInput, 500));
   
+
+  
+ 
