@@ -1,21 +1,18 @@
-
-
-createAutoComplete({
-    root: document.querySelector('.autocomplete'),
-    renderOption(movie){
+const autocompleteConfig = {
+    renderOption(movie) {
         const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
-        return`
+        return `
         <img src="${imgSrc}" />
         ${movie.Title} (${movie.Year})
       `
     },
-    onOptionSelect(movie){
+    onOptionSelect(movie) {
         onMovieSelect(movie);
     },
-    inputValue(movie){
+    inputValue(movie) {
         return movie.Title;
     },
-    async fetchData(searchTerm){
+    async fetchData(searchTerm) {
         const response = await axios.get('http://www.omdbapi.com/', {
             params: {
                 apikey: 'd9835cc5',
@@ -27,6 +24,13 @@ createAutoComplete({
         }
         return response.data.Search;
     },
+};
+
+
+createAutoComplete({
+    ...autocompleteConfig,
+    root: document.querySelector('#left-autocomplete'),
+
 });
 
 
