@@ -42,18 +42,38 @@ const autoCompleteConfig = {
       onMovieSelect(movie, document.querySelector('#right-summary'), 'right');
     },
   });
-  
-  const onMovieSelect = async (movie, summaryElement) => {
+   let leftMovie;
+    let rightMovie;
+  const onMovieSelect = async (movie, summaryElement, side) => {
     const response = await axios.get('http://www.omdbapi.com/', {
       params: {
         apikey: 'd9835cc5',
         i: movie.imdbID
-      }
-    });
+    
+  }});
   
     summaryElement.innerHTML = movieTemplate(response.data);
-  };
-  
+      side === 'left' ? leftMovie=response.data : rightMovie=response.data;
+        if(leftMovie && rightMovie){
+            runComparison();
+        }
+    };
+
+    const runComparison = () => {
+        const leftSideStats = document.querySelectorAll('#left-summary .notification');
+        const rightSideStats = document.querySelectorAll('#right-summary .notification');
+        leftSideStats.forEach((leftStat, index) => {
+            const rightStat = rightSideStats[index];
+            const leftSideValue = parseInt(leftStat.dataset.value);
+            const rightSideValue = parseInt(rightStat.dataset.value);
+            if(rightSideValue > leftSideValue){
+                leftStat.classList.remove('is-primary');
+                leftStat.classList.add('is-warning');
+            }else{
+                rightStat.classList.remove('is-primary');
+                rightStat.classList.add('is-warning');
+    }})};
+
   const movieTemplate = movieDetail => {
     return `
       <article class="media">
