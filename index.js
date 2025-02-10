@@ -68,7 +68,15 @@ const autoCompleteConfig = {
     const metascore = parseInt(movieDetail.Metascore);
     const imdbRating = parseFloat(movieDetail.imdbRating);
     const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ''));
-    console.log(metascore, imdbRating, imdbVotes);
+    const awrds =movieDetail.Awards.split(' ').reduce((prev, word) => {
+        const value = parseInt(word);
+        if(isNaN(value)){
+            return prev;
+        }else{
+            return prev + value;}
+    },0)
+    console.log(awrds);
+    
     return `
       <article class="media">
         <figure class="media-left">
